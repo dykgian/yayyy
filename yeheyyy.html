@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer it</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            position: relative; 
+            overflow: hidden; 
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+        }
+
+        .yes-btn-container, .no-btn-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+            position: relative;
+        }
+
+        .no-btn {
+            background-color: #e74c3c;
+            position: absolute; 
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .no-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #congrats-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                width: 100%;
+                padding: 15px;
+            }
+
+            img {
+                max-width: 250px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <form id="quizForm">
+        <img id="gif" src="https://media.tenor.com/WafAe-j0HF8AAAAj/pudgy-penguin.gif" alt="GIF Image">
+        <h2 id="question">Are you ready?</h2>
+        
+        <div class="btn-container">
+            <div class="yes-btn-container">
+                <button type="button" onclick="changeContent()">Yes</button>
+            </div>
+            <div class="no-btn-container">
+                <button type="button" id="noButton" class="no-btn" onclick="moveNoButton()">No</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="congrats-container">
+        <h2>🎉 YAYYY! I KNEW IT, YOU LIKE ME PALA AH👀💕 🎉</h2>
+        <img src="https://media.tenor.com/VNJCzBGPKGQAAAAj/aww.gif" alt="Celebration GIF">
+    </div>
+
+    <script>
+        const questions = [
+            { text: "Empty", gif: "empty" },
+            { text: "Do you like cats?", gif: "https://25.media.tumblr.com/b832028c117cb548614cbea10f0153dc/tumblr_mudg73OFlK1rgpyeqo1_500.gif" },
+            { text: "Is peonies your favorite flower?", gif: "https://media.tenor.com/vI8KgHayJGsAAAAj/flowers-happy.gif" },
+            { text: "Do you love sleeping?", gif: "https://custom-doodle.com/wp-content/uploads/doodle/auto-draft/sleeping-snoopy-doodle.gif" },
+            { text: "Do you like me?", gif: "https://media.tenor.com/SFy5Za0DyMEAAAAj/erm-fingers.gif" }
+        ];
+
+        const funnyTexts = ["luh", "yawa", "piste", "sakit", "pighati", "kirot", "lumbay", "hinagpis"];
+        const noButtonGifs = [
+            "https://media.tenor.com/NC9S9-pqbzkAAAAj/lucu-cute-cat.gif",
+            "https://media.tenor.com/cxwmE_VPWoMAAAAj/peachcat-cat.gif",
+            "https://media.tenor.com/yhMZIW9G7BkAAAAj/peachcat-cat.gif",
+            "https://media.tenor.com/7Qz2iamu4egAAAAj/peach-goma-sad-tears.gif"
+        ];
+
+        let currentIndex = 0;
+        let noClickCount = 0;
+
+        function changeContent() {
+            currentIndex++;
+
+            if (currentIndex < questions.length) {
+                document.getElementById("question").textContent = questions[currentIndex].text;
+                document.getElementById("gif").src = questions[currentIndex].gif;
+            } else {
+                document.getElementById("quizForm").classList.add("hidden");
+                document.getElementById("congrats-container").style.display = "flex";
+            }
+        }
+
+        function moveNoButton() {
+            if (currentIndex === questions.length - 1) { 
+                let noButton = document.getElementById("noButton");
+
+                let randomX = (Math.random() - 0.5) * 200; 
+                let randomY = (Math.random() - 0.5) * 200; 
+
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+
+                noButton.textContent = funnyTexts[Math.floor(Math.random() * funnyTexts.length)];
+
+                document.getElementById("gif").src = noButtonGifs[noClickCount % noButtonGifs.length];
+                noClickCount++;
+            } else {
+                changeContent();
+            }
+        }
+    </script>
+
+</body>
+</html>

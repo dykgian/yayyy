@@ -1,4 +1,2 @@
----
-title: Welcome to my blog
----
-
+# Welcome to My Website!
+This is my custom homepage.
